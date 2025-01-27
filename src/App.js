@@ -8,6 +8,7 @@ import Pricing from './compenents/Pricing';
 import Contact from './compenents/Contact';
 import Footer from './compenents/Footer';
 import ChatPage from './pages/ChatPage';
+import './App.css';
 
 const App = () => {
   return (

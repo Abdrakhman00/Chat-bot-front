@@ -1,16 +1,99 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* App.css */
 
-/* Дополнительные пользовательские стили */
+/* Цветовые переменные */
+:root {
+  --color-violet-dark: #4a42cc; /* Более тёмный вариант фиолетового */
+  --color-violet: #6c63ff;
+  --color-light: #ffffff;
+  --color-dark: #333333;
+  --linear-bg: linear-gradient(135deg, #6c63ff, #106d76);
+  --radius: 12px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Основные стили */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
 
-h1, h2, h3, h4 {
-  font-weight: 700;
+/* Navbar */
+.navbar {
+  font-size: 1rem;
+  letter-spacing: 0.5px;
 }
 
-button {
-  transition: all 0.3s ease;
+.nav-link {
+  color: var(--color-dark) !important;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: var(--color-violet) !important;
+}
+
+/* Header */
+header {
+  color: var(--color-light);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Световые эффекты */
+header h1 {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 8px rgba(108, 99, 255, 0.8), 0 0 16px rgba(108, 99, 255, 0.6);
+  }
+  to {
+    text-shadow: 0 0 16px rgba(108, 99, 255, 1), 0 0 32px rgba(108, 99, 255, 0.8);
+  }
+}
+
+/* Карточки цен */
+.card {
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-weight: bold;
+  color: var(--color-violet);
+}
+
+/* Кнопки */
+.btn-primary {
+  background-color: var(--color-violet);
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #524ed9;
+}
+
+/* Формы */
+.form-control {
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+}
+
+/* Footer */
+footer {
+  font-size: 0.9rem;
+  background-color: var(--color-dark);
+}
+
+
+.navbar-brand svg path {
+  fill: var(--color-violet-dark); /* Тёмный фиолетовый цвет для тёмной темы */
 }

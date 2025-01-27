@@ -1,0 +1,91 @@
+/* App.css */
+
+/* Страница чата */
+.chat-container {
+    margin-top: 2rem;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .chat-header {
+    font-size: 1.5rem;
+    color: var(--color-dark);
+    font-weight: bold;
+  }
+  
+  .chat-box {
+    border: 2px solid var(--color-violet);
+    border-radius: var(--radius);
+    padding: 1rem;
+    background-color: #f9f9f9;
+    height: 400px;
+    overflow-y: auto;
+  }
+  
+  .chat-message {
+    display: inline-block;
+    max-width: 70%;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+  }
+  
+  .chat-message.user {
+    background-color: var(--color-violet);
+    color: #ffffff;
+    text-align: right;
+  }
+  
+  .chat-message.bot {
+    background-color: #e9ecef;
+    color: var(--color-dark);
+    text-align: left;
+  }
+  
+  .chat-input-container {
+    margin-top: 1rem;
+    display: flex;
+  }
+  
+  .chat-input {
+    flex-grow: 1;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid #ced4da;
+    padding: 0.5rem;
+  }
+  
+  .chat-input:focus {
+    border-color: var(--color-violet);
+    outline: none;
+  }
+  
+  .chat-send-btn {
+    background-color: var(--color-violet);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.3s ease;
+  }
+  
+  .chat-send-btn:hover {
+    background-color: #524ed9;
+    cursor: pointer;
+  }
+  
+
+  /* Кнопка очистки истории */
+.btn-danger {
+    background-color: #d9534f;
+    border: none;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c9302c;
+    cursor: pointer;
+  }
+  

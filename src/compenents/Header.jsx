@@ -1,16 +1,62 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById("features");
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <header className="bg-primary text-white text-center py-5">
+    <header
+      className="bg-primary text-white text-center py-5"
+      style={{ background: "var(--linear-bg)" }}
+    >
       <div className="container">
-        <h1 className="display-4">Революционизируйте ваш бизнес с ИИ чат-ботом</h1>
-        <p className="lead">Оптимизируйте поддержку клиентов и увеличьте вовлеченность с нашим чат-ботом на базе ИИ.</p>
-        <Link to="/chat">
-          <button className="btn btn-light btn-lg mt-3">Начать</button>
-        </Link>
+        <h1
+          className="display-4 fw-bold"
+          style={{
+            animation: "float 3s ease-in-out infinite",
+            animationDelay: "1s",
+          }}
+        >
+          Революционизируйте ваш бизнес с помощью ИИ ЧатБота
+        </h1>
+        <p className="lead mt-3">
+          Улучшайте обслуживание клиентов и увеличивайте вовлеченность с нашим
+          ИИ-чатботом.
+        </p>
+        <div className="mt-4">
+          <a
+            href="/chat"
+            className="btn btn-light btn-lg mx-2"
+            style={{ color: "var(--color-violet)" }}
+          >
+            Начать
+          </a>
+          <button
+            onClick={scrollToFeatures}
+            className="btn btn-outline-light btn-lg mx-2"
+            style={{ borderColor: "var(--color-light)" }}
+          >
+            Узнать больше
+          </button>
+        </div>
       </div>
+      <style>
+        {`
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+        `}
+      </style>
     </header>
   );
 };

@@ -1,31 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./chatPage.css";
 
 function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
+  // Загрузка истории чата из localStorage при загрузке компонента
+  useEffect(() => {
+    const chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || [];
+    setMessages(chatHistory);
+  }, []);
+
+  // Сохранение истории чата в localStorage при каждом обновлении
+  useEffect(() => {
+    localStorage.setItem("chatHistory", JSON.stringify(messages));
+  }, [messages]);
+
   const handleSendMessage = () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, user: true }]);
+      const userMessage = { text: input, user: true };
+      setMessages([...messages, userMessage]);
       setInput("");
-      // Simulate chatbot response
+
+      // Имитация ответа чат-бота
       setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          { text: "This is a chatbot response!", user: false },
-        ]);
+        const botMessage = {
+          text: "This is a chatbot response!",
+          user: false,
+        };
+        setMessages((prev) => [...prev, botMessage]);
       }, 1000);
     }
   };
 
+  const handleClearHistory = () => {
+    setMessages([]);
+    localStorage.removeItem("chatHistory");
+  };
+
   return (
-    <div className="container mt-4">
-      <h2>Chat with Our Bot</h2>
-      <div
-        className="border rounded p-3"
-        style={{ height: "400px", overflowY: "scroll" }}
-      >
+    <div className="container chat-container">
+      <h2 className="chat-header">Chat with Our Bot</h2>
+      <button className="btn btn-danger mb-3" onClick={handleClearHistory}>
+        Clear Chat History
+      </button>
+      <div className="chat-box">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -34,8 +54,8 @@ function ChatPage() {
             } mb-2`}
           >
             <div
-              className={`p-2 rounded ${
-                message.user ? "bg-primary text-white" : "bg-light text-dark"
+              className={`chat-message ${
+                message.user ? "user" : "bot"
               }`}
             >
               {message.text}
@@ -43,15 +63,15 @@ function ChatPage() {
           </div>
         ))}
       </div>
-      <div className="mt-3 d-flex">
+      <div className="chat-input-container">
         <input
           type="text"
-          className="form-control"
+          className="form-control chat-input"
           placeholder="Type a message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button className="btn btn-success ms-2" onClick={handleSendMessage}>
+        <button className="chat-send-btn ms-2" onClick={handleSendMessage}>
           Send
         </button>
       </div>
