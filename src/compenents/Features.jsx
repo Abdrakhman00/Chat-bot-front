@@ -33,19 +33,18 @@ const Features = () => {
       <h2 className="text-center mb-5 text-uppercase fw-bold" style={{ color: "#34495e" }}>
         Особенности
       </h2>
-      <div className="row">
+      <div className="row justify-content-center">
         {featuresData.map((feature, index) => (
           <div
             key={index}
-            className="col-md-4 mb-4 d-flex justify-content-center"
-            onClick={() => toggleExpand(index)}
-            style={{ cursor: "pointer", transition: "transform 0.3s", transform: expandedIndex === index ? "scale(1.05)" : "scale(1)" }}
+            className="col-lg-4 col-md-6 mb-4 d-flex justify-content-center"
+            style={{ transition: "transform 0.3s", transform: expandedIndex === index ? "scale(1.05)" : "scale(1)" }}
           >
             <div
               className="card text-center shadow-lg border-0"
               style={{
                 width: "100%",
-                maxWidth: "320px",
+                maxWidth: "350px",
                 background: "linear-gradient(145deg, #f0f0f3, #ffffff)",
                 borderRadius: "20px",
                 padding: "30px",
@@ -80,6 +79,17 @@ const Features = () => {
                   {feature.detailedDescription}
                 </div>
               )}
+              <button
+                className="btn btn-primary mt-3 d-flex align-items-center justify-content-center"
+                onClick={() => toggleExpand(index)}
+                style={{ borderRadius: "20px" }}
+              >
+                <i
+                  className={`bi ${expandedIndex === index ? "bi-chevron-up" : "bi-chevron-down"} me-2`}
+                  style={{ fontSize: "1rem" }}
+                ></i>
+                {expandedIndex === index ? "Скрыть" : "Подробнее"}
+              </button>
             </div>
           </div>
         ))}
@@ -100,6 +110,11 @@ const Features = () => {
 
           .card:hover {
             box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(255, 255, 255, 0.7);
+          }
+
+          button:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
           }
         `}
       </style>
