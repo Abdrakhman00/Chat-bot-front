@@ -97,3 +97,12 @@ footer {
 .navbar-brand svg path {
   fill: var(--color-violet-dark); /* Тёмный фиолетовый цвет для тёмной темы */
 }
+
+.text-uppercase {
+  text-transform: uppercase; /* Преобразует текст в заглавные буквы */
+}
+
+.font-weight-bold {
+  color: var(--color-primary);
+  font-weight: bold; /* Сделает текст жирным */
+}

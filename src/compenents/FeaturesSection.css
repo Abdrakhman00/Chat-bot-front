@@ -1,0 +1,133 @@
+/* FeaturesSection.css */
+
+/* Используем переменные из App.css */
+:root {
+    --color-primary-dark: #34495e;
+    --color-primary: #2c3e50;
+    --color-light: #ffffff;
+    --color-shadow: #d1d9e6;
+    --color-bg: #f8f9fa;
+    --color-card-bg: #ffffff;
+    --color-icon: #007bff;
+    --radius: 20px;
+}
+
+/* Основные стили секции */
+.o-section {
+    padding: 3rem 0;
+    background-color: var(--color-bg);
+}
+
+.o-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Заголовок секции */
+.o-section__heading--centered {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.u-a3 {
+    font-size: 2,2rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase; /* Добавляем преобразование в заглавные буквы */
+}
+
+
+/* Список карточек */
+.c-card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.c-card-list--2-column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.c-card-list__item {
+    flex: 1 1 calc(50% - 1rem);
+}
+
+/* Карточка */
+.c-card {
+    background: var(--color-card-bg);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 5px 5px 15px var(--color-shadow), -5px -5px 15px var(--color-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.c-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 10px 10px 20px var(--color-shadow), -10px -10px 20px var(--color-light);
+}
+
+.c-card__header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.c-card__icon {
+    margin-bottom: 1rem;
+}
+
+.c-card__icon i {
+    font-size: 3rem;
+    color: var(--color-icon);
+    text-shadow: 0px 2px 5px rgba(0, 123, 255, 0.5);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.c-card:hover .c-card__icon i {
+    transform: scale(1.2);
+    color: var(--color-primary);
+}
+
+.u-a1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+}
+
+.c-card__content {
+    text-align: center;
+}
+
+.u-b0 {
+    font-size: 1rem;
+    color: var(--color-primary);
+    line-height: 1.6;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .c-card-list--2-column {
+        grid-template-columns: 1fr;
+    }
+
+    .u-a3 {
+        font-size: 2rem;
+    }
+
+    .u-a1 {
+        font-size: 1.25rem;
+    }
+
+    .u-b0 {
+        font-size: 0.9rem;
+    }
+}

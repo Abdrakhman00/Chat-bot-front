@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ onOpenChat }) => {  // Принимаем onOpenChat
   const scrollToFeatures = () => {
     const featuresSection = document.getElementById("features");
     if (featuresSection) {
@@ -29,13 +28,13 @@ const Header = () => {
           ИИ-чатботом.
         </p>
         <div className="mt-4">
-          <a
-            href="/chat"
+          <button  // Заменяем <a> на кнопку
+            onClick={onOpenChat}  // Теперь вызывает окно с вводом номера
             className="btn btn-light btn-lg mx-2"
             style={{ color: "var(--color-violet)" }}
           >
             Начать
-          </a>
+          </button>
           <button
             onClick={scrollToFeatures}
             className="btn btn-outline-light btn-lg mx-2"

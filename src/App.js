@@ -1,35 +1,45 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import Navbar from './compenents/Navbar';
 import Header from './compenents/Header';
 import Features from './compenents/Features';
+import FeaturesSection from './compenents/FeaturesSection';
 import Pricing from './compenents/Pricing';
-import Contact from './compenents/Contact';
+// import Contact from './compenents/Contact';  
 import Footer from './compenents/Footer';
-import ChatPage from './pages/ChatPage';
+import { ChatModal } from './compenents/ChatModal';
 import './App.css';
 
 const App = () => {
+  // Чат открывается сразу при загрузке страницы
+  const [showChat, setShowChat] = useState(true);
+
+  // Закрываем чат
+  const handleCloseChat = () => {
+    setShowChat(false);
+  };
+
   return (
-    <Router>
+    <div>
       <Navbar />
-      <Routes>
-        <Route 
-          path="/" 
-          element={
-            <>
-              <Header />
-              <Features />
-              <Pricing />
-              <Contact />
-              <Footer />
-            </>
-          } 
+      <Header />  {/* Убрали передачу функции onOpenChat */}
+      <Features />
+      <FeaturesSection />
+      <Pricing />
+      {/* <Contact />   */}
+      <Footer />
+
+      {/* Модальное окно чата */}
+      {showChat && (
+        <ChatModal
+          isOpen={showChat}
+          onClose={handleCloseChat}
+          phone={""}  // Номер телефона больше не требуется
+          userId={"0"} 
         />
-        <Route path="/chat" element={<ChatPage />} />
-      </Routes>
-    </Router>
+      )}
+    </div>
   );
 };
 
