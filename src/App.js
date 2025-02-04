@@ -1,45 +1,64 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import Navbar from './compenents/Navbar';
-import Header from './compenents/Header';
-import Features from './compenents/Features';
-import FeaturesSection from './compenents/FeaturesSection';
-import Pricing from './compenents/Pricing';
-// import Contact from './compenents/Contact';  
-import Footer from './compenents/Footer';
-import { ChatModal } from './compenents/ChatModal';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import Navbar from "./compenents/Navbar";
+import Header from "./compenents/Header";
+import Features from "./compenents/Features";
+import FeaturesSection from "./compenents/FeaturesSection";
+import Pricing from "./compenents/Pricing";
+import Footer from "./compenents/Footer";
+import { ChatModal } from "./compenents/ChatModal";
+import "./App.css";
+
+const ChatPage = ({ onClose }) => {
+  return (
+    <ChatModal isOpen={true} onClose={onClose} userId={"0"} phone={""} />
+  );
+};
 
 const App = () => {
-  // Чат открывается сразу при загрузке страницы
-  const [showChat, setShowChat] = useState(true);
+  const [showChatModal, setShowChatModal] = useState(false);
 
-  // Закрываем чат
-  const handleCloseChat = () => {
-    setShowChat(false);
+  // Обработчик для открытия чата
+  const handleStartChat = () => {
+    setShowChatModal(true); // Показываем ChatModal сразу при нажатии кнопки
   };
 
+  // Обработчик для закрытия чата
+  const handleCloseChat = () => {
+    setShowChatModal(false);
+  };
+  
   return (
-    <div>
+    <Router>
       <Navbar />
-      <Header />  {/* Убрали передачу функции onOpenChat */}
-      <Features />
-      <FeaturesSection />
-      <Pricing />
-      {/* <Contact />   */}
-      <Footer />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header onStartChat={handleStartChat} />
+              <Features />
+              <FeaturesSection />
+              <Pricing />
+              <Footer />
+            </>
+          }
+        />
+        <Route path="/chat" element={<ChatPage onClose={handleCloseChat} />} />
+      </Routes>
 
-      {/* Модальное окно чата */}
-      {showChat && (
+      {/* Окно чата открывается при нажатии на кнопку */}
+      {showChatModal && (
         <ChatModal
-          isOpen={showChat}
-          onClose={handleCloseChat}
-          phone={""}  // Номер телефона больше не требуется
-          userId={"0"} 
+          isOpen={true}
+          onClose={handleCloseChat} // Передаем функцию закрытия сюда
+          userId={"0"}
+          phone={""}
         />
       )}
-    </div>
+    </Router>
   );
 };
 
