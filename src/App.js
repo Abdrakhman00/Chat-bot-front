@@ -8,6 +8,7 @@ import Features from "./compenents/Features";
 import FeaturesSection from "./compenents/FeaturesSection";
 import Pricing from "./compenents/Pricing";
 import Footer from "./compenents/Footer";
+// import Contact from "./compenents/Contact";
 import { ChatModal } from "./compenents/ChatModal";
 import "./App.css";
 
@@ -41,7 +42,9 @@ const App = () => {
               <Header onStartChat={handleStartChat} />
               <Features />
               <FeaturesSection />
+            
               <Pricing />
+              {/* <Contact /> */}
               <Footer />
             </>
           }

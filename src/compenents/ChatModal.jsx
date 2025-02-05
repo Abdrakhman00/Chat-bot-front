@@ -4,7 +4,6 @@ import "./ChatModal.css";
 
 export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
   // Храним сообщения в localStorage по ключу "chatMessages-{userId}"
-  // Если в localStorage нет истории, по умолчанию одно сообщение от "bot"
   const [messages, setMessages] = useLocalStorage(`chatMessages-${userId}`, [
     { sender: "bot", text: "Здравствуйте! Чем можем помочь?" },
   ]);
@@ -17,9 +16,8 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
         const formData = new FormData();
         formData.append("user_id", userId);
 
-        // ----- ВАЖНО: убираем http://5.35.108.144:8081
-        // и используем относительный путь /chat/get_chat
-        const response = await fetch("/chat/get_chat", {
+        // Новый IP-адрес и порт
+        const response = await fetch("http://185.32.84.95:8081/chat/get_chat", {
           method: "POST",
           body: formData,
         });
@@ -62,9 +60,8 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
       formData.append("user_message", message);
       if (phone) formData.append("phone", phone);
 
-      // ----- ВАЖНО: вместо http://5.35.108.144:8081/chat/send_message
-      // обращаемся к /chat/send_message
-      const response = await fetch("/chat/send_message", {
+      // Новый IP-адрес и порт
+      const response = await fetch("http://185.32.84.95:8081/chat/send_message", {
         method: "POST",
         body: formData,
       });
@@ -127,11 +124,9 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
           />
           <button onClick={handleSendMessage}>Отправить</button>
         </div>
-
         <button className="close-chat-btn" onClick={onClose}>
-        Закрыть
-      </button>
-
+          Закрыть
+        </button>
       </div>
     </div>
   );
