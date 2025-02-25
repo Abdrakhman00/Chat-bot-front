@@ -3,56 +3,52 @@ import useLocalStorage from "./useLocalStorage";
 import "./ChatModal.css";
 
 export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
-  // Храним сообщения в localStorage по ключу "chatMessages-{userId}"
-  const [messages, setMessages] = useLocalStorage(`chatMessages-${userId}`, [
-    { sender: "bot", text: "Здравствуйте! Чем можем помочь?" },
-  ]);
+  const [messages, setMessages] = useLocalStorage(`chatMessages-${userId}`, []);
   const [userInput, setUserInput] = useState("");
 
-  // При открытии чата загружаем историю
+  // Загружаем историю чата при открытии
   useEffect(() => {
+    if (!isOpen) return;
+
     const fetchChatHistory = async () => {
       try {
         const formData = new FormData();
         formData.append("user_id", userId);
-
-        // Новый IP-адрес и порт
-        const response = await fetch("http://5.35.106.195/chat/get_chat", {
+    
+        const response = await fetch("http://5.35.106.195:8081/chat/get_chat", {
           method: "POST",
           body: formData,
         });
-
+    
+        console.log("Ответ сервера (get_chat):", response);
+    
         if (!response.ok) {
           throw new Error(`Ошибка при запросе: ${response.status}`);
         }
-
+    
         const data = await response.json();
-
+        console.log("Полученные данные:", data);
+    
         if (Array.isArray(data.answer)) {
           const chatHistory = data.answer.map((item) => ({
             sender: item.Role === "user" ? "user" : "bot",
             text: item.Content,
           }));
-
-          if (chatHistory.length > 0) {
-            setMessages(chatHistory);
-          } else {
-            setMessages([
-              { sender: "bot", text: "Здравствуйте! Чем можем помочь?" },
-            ]);
-          }
+    
+          setMessages(chatHistory.length > 0 ? chatHistory : [
+            { sender: "bot", text: "Здравствуйте! Чем можем помочь?" },
+          ]);
         }
       } catch (error) {
         console.error("Ошибка при загрузке истории чата:", error);
       }
     };
+    
 
-    if (isOpen) {
-      fetchChatHistory();
-    }
-  }, [isOpen, userId, setMessages]);
+    fetchChatHistory();
+  }, [isOpen, userId]);
 
-  // Отправка нового сообщения на сервер
+  // Отправка сообщения на сервер
   const sendMessageToBackend = async (message) => {
     try {
       const formData = new FormData();
@@ -60,8 +56,7 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
       formData.append("user_message", message);
       if (phone) formData.append("phone", phone);
 
-      // Новый IP-адрес и порт
-      const response = await fetch("http://5.35.106.195/chat/send_message", {
+      const response = await fetch("http://5.35.106.195:8081/chat/send_message", {
         method: "POST",
         body: formData,
       });
@@ -70,32 +65,35 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
         throw new Error(`Ошибка при запросе: ${response.status}`);
       }
 
-      const data = await response.json();
-      return data.answer;
+      const responseText = await response.text();
+      console.log("Ответ от API на отправку:", responseText); // Лог ответа
+      const data = JSON.parse(responseText);
+
+      return data.answer || "Ошибка: пустой ответ от сервера.";
     } catch (error) {
       console.error("Ошибка при отправке сообщения:", error);
       return "Извините, произошла ошибка при обработке вашего сообщения.";
     }
   };
 
-  // Обработчик кнопки "Отправить" (и Enter)
+  // Обработчик отправки сообщения
   const handleSendMessage = async () => {
-    if (userInput.trim() === "") return;
+    if (!userInput.trim()) return; // Защита от пустых сообщений
 
-    // Добавляем сообщение пользователя
-    const userMessage = { sender: "user", text: userInput };
-    setMessages((prev) => [...prev, userMessage]);
-    setUserInput("");
+    try {
+      const userMessage = { sender: "user", text: userInput.trim() };
+      setMessages((prev) => [...prev, userMessage]);
+      setUserInput("");
 
-    // Отправляем на сервер и получаем ответ
-    const botReply = await sendMessageToBackend(userInput);
+      const botReply = await sendMessageToBackend(userInput.trim());
+      const botMessage = { sender: "bot", text: botReply };
 
-    // Добавляем ответ бота
-    const botMessage = { sender: "bot", text: botReply };
-    setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error("Ошибка при обработке сообщения:", error);
+    }
   };
 
-  // Если окно чата не открыто, ничего не рендерим
   if (!isOpen) return null;
 
   return (
