@@ -15,7 +15,7 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
         const formData = new FormData();
         formData.append("user_id", userId);
     
-        const response = await fetch("http://5.35.106.195:8081/chat/get_chat", {
+        const response = await fetch("https://aisale.kz/chat/get_chat", {
           method: "POST",
           body: formData,
         });
@@ -56,7 +56,7 @@ export const ChatModal = ({ isOpen, onClose, userId, phone }) => {
       formData.append("user_message", message);
       if (phone) formData.append("phone", phone);
 
-      const response = await fetch("http://5.35.106.195:8081/chat/send_message", {
+      const response = await fetch("https://aisale.kz/chat/send_message", {
         method: "POST",
         body: formData,
       });
